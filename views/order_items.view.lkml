@@ -4,26 +4,31 @@ view: order_items {
   dimension: id {
     type: number
     primary_key: yes
+    hidden: yes
     sql: ${TABLE}.id ;;
   }
 
   dimension: order_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.order_id ;;
   }
 
   dimension: user_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.user_id ;;
   }
 
   dimension: product_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.product_id ;;
   }
 
   dimension: inventory_item_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.inventory_item_id ;;
   }
 
@@ -63,6 +68,7 @@ view: order_items {
 
   dimension: receiver_user_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.receiver_user_id ;;
   }
 

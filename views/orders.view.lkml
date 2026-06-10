@@ -4,12 +4,14 @@ view: orders {
   dimension: order_id {
     type: number
     primary_key: yes
+    hidden: yes
     sql: ${TABLE}.order_id ;;
     description: "A unique identifier for each order."
   }
 
   dimension: user_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.user_id ;;
     description: "A unique identifier for the customer who placed the order."
   }

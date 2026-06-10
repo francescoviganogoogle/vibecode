@@ -4,6 +4,7 @@ view: users {
   dimension: id {
     type: number
     primary_key: yes
+    hidden: yes
     sql: ${TABLE}.id ;;
     description: "This column contains a unique identifier for each user."
   }

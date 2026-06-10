@@ -4,6 +4,7 @@ view: distribution_centers {
   dimension: id {
     type: number
     primary_key: yes
+    hidden: yes
     sql: ${TABLE}.id ;;
     description: "A unique identifier for each location."
   }

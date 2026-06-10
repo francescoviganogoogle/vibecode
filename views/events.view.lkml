@@ -4,12 +4,14 @@ view: events {
   dimension: id {
     type: number
     primary_key: yes
+    hidden: yes
     sql: ${TABLE}.id ;;
     description: "A unique identifier for each recorded event."
   }
 
   dimension: user_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.user_id ;;
     description: "An identifier for the user performing the event."
   }
@@ -22,6 +24,7 @@ view: events {
 
   dimension: session_id {
     type: string
+    hidden: yes
     sql: ${TABLE}.session_id ;;
     description: "A unique identifier for a user's continuous interaction period."
   }

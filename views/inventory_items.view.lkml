@@ -4,11 +4,13 @@ view: inventory_items {
   dimension: id {
     type: number
     primary_key: yes
+    hidden: yes
     sql: ${TABLE}.id ;;
   }
 
   dimension: product_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.product_id ;;
   }
 

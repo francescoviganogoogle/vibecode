@@ -4,6 +4,7 @@ view: products {
   dimension: id {
     type: number
     primary_key: yes
+    hidden: yes
     sql: ${TABLE}.id ;;
     description: "This column contains a unique numerical identifier for each product."
   }
@@ -43,12 +44,14 @@ view: products {
 
   dimension: sku {
     type: string
+    hidden: yes
     sql: ${TABLE}.sku ;;
     description: "This column contains the Stock Keeping Unit (SKU) for the product, which is a unique alphanumeric identifier."
   }
 
   dimension: distribution_center_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.distribution_center_id ;;
     description: "This column contains a numerical identifier for the distribution center where the product is located."
   }

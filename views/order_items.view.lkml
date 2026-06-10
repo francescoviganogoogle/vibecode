@@ -69,6 +69,7 @@ view: order_items {
   # Measures based on key metrics
   measure: count {
     type: count
+    drill_fields: [products.product_hierarchy_drill*]
   }
 
   measure: total_sale_price {
@@ -76,6 +77,7 @@ view: order_items {
     sql: ${sale_price} ;;
     value_format_name: usd
     description: "Total sales from items sold (sum of sale_price column in order_items table)"
+    drill_fields: [products.product_hierarchy_drill*]
   }
 
   measure: average_sale_price {
@@ -98,6 +100,7 @@ view: order_items {
     filters: [status: "-canceled,-returned"]
     value_format_name: usd
     description: "Total revenue from completed sales (order_items.status = canceled or returned excluded)"
+    drill_fields: [products.product_hierarchy_drill*]
   }
 
   measure: number_of_items_returned {
@@ -119,6 +122,7 @@ view: order_items {
     sql: ${total_gross_revenue} - ${inventory_items.total_cost} ;;
     value_format_name: usd
     description: "Total difference between the total revenue from completed sales and the cost of the goods that were sold"
+    drill_fields: [products.product_hierarchy_drill*]
   }
 
   measure: average_gross_margin {

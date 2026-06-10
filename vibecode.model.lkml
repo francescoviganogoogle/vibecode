@@ -1,6 +1,7 @@
 connection: "looker_demo_data_2"
 
-include: "*.view.lkml"
+include: "/views/**/*.view.lkml"
+include: "/*.dashboard"
 
 explore: order_items {
   label: "Order Items (Ecommerce)"

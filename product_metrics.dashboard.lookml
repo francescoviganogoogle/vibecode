@@ -243,7 +243,7 @@
       name: revenue_dept_share
       model: vibecode
       explore: order_items
-      type: looker_donut_multiples
+      type: looker_pie
       fields: [products.department, order_items.total_gross_revenue]
       sorts: [order_items.total_gross_revenue desc]
       inner_radius: 55

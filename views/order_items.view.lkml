@@ -165,4 +165,148 @@ view: order_items {
     value_format_name: usd
     description: "Total Sale Price / total number of customers"
   }
+
+  # =========================================================================
+  # PERIOD-OVER-PERIOD (PoP) FIELDS
+  # =========================================================================
+
+  filter: date_input {
+    type: date
+    description: "Select the date range for the current period to compare against the parallel previous period"
+  }
+
+  dimension: selected_period_start {
+    type: date
+    hidden: yes
+    sql: 
+      {% if date_input._is_filtered %}
+        DATE({% date_start date_input %})
+      {% else %}
+        NULL
+      {% endif %} ;;
+  }
+
+  dimension: selected_period_end {
+    type: date
+    hidden: yes
+    sql: 
+      {% if date_input._is_filtered %}
+        DATE({% date_end date_input %})
+      {% else %}
+        NULL
+      {% endif %} ;;
+  }
+
+  dimension: selected_period_length {
+    type: number
+    hidden: yes
+    sql: 
+      {% if date_input._is_filtered %}
+        DATE_DIFF(DATE({% date_end date_input %}), DATE({% date_start date_input %}), DAY)
+      {% else %}
+        NULL
+      {% endif %} ;;
+  }
+
+  dimension: parallel_period_start {
+    type: date
+    hidden: yes
+    sql: 
+      {% if date_input._is_filtered %}
+        DATE_SUB(DATE({% date_start date_input %}), INTERVAL ${selected_period_length} DAY)
+      {% else %}
+        NULL
+      {% endif %} ;;
+  }
+
+  dimension: parallel_period_end {
+    type: date
+    hidden: yes
+    sql: 
+      {% if date_input._is_filtered %}
+        DATE({% date_start date_input %})
+      {% else %}
+        NULL
+      {% endif %} ;;
+  }
+
+  dimension: period {
+    type: string
+    description: "Categorizes transactions into 'Current', 'Previous' (parallel), or 'Other' based on date_input"
+    sql:
+      {% if date_input._is_filtered %}
+        CASE
+          WHEN ${created_date} >= ${selected_period_start} AND ${created_date} < ${selected_period_end} THEN 'Current'
+          WHEN ${created_date} >= ${parallel_period_start} AND ${created_date} < ${parallel_period_end} THEN 'Previous'
+          ELSE 'Other'
+        END
+      {% else %}
+        'No Filter Selected'
+      {% endif %} ;;
+  }
+
+  dimension: days_from_start {
+    type: number
+    description: "Index day from the start of the period (0, 1, 2, ...). Ideal for comparing period trends."
+    sql:
+      {% if date_input._is_filtered %}
+        CASE
+          WHEN ${period} = 'Current' THEN DATE_DIFF(${created_date}, ${selected_period_start}, DAY)
+          WHEN ${period} = 'Previous' THEN DATE_DIFF(${created_date}, ${parallel_period_start}, DAY)
+          ELSE NULL
+        END
+      {% else %}
+        NULL
+      {% endif %} ;;
+  }
+
+  dimension: aligned_date {
+    type: date
+    description: "Aligns previous period's transaction dates with current period's dates on a single timeline."
+    sql:
+      {% if date_input._is_filtered %}
+        CASE
+          WHEN ${period} = 'Current' THEN ${created_date}
+          WHEN ${period} = 'Previous' THEN DATE_ADD(${created_date}, INTERVAL ${selected_period_length} DAY)
+          ELSE NULL
+        END
+      {% else %}
+        NULL
+      {% endif %} ;;
+  }
+
+  # -------------------------------------------------------------------------
+  # POP MEASURES
+  # -------------------------------------------------------------------------
+
+  measure: current_period_sales {
+    type: sum
+    sql: ${sale_price} ;;
+    filters: [period: "Current"]
+    value_format_name: usd
+    description: "Total sales in the user-selected current period."
+  }
+
+  measure: previous_period_sales {
+    type: sum
+    sql: ${sale_price} ;;
+    filters: [period: "Previous"]
+    value_format_name: usd
+    description: "Total sales in the dynamically-computed parallel previous period."
+  }
+
+  measure: sales_absolute_difference {
+    type: number
+    sql: ${current_period_sales} - ${previous_period_sales} ;;
+    value_format_name: usd
+    description: "Absolute difference in sales: Current Sales - Previous Sales"
+  }
+
+  measure: sales_percentage_difference {
+    type: number
+    sql: (${current_period_sales} - ${previous_period_sales}) / NULLIF(${previous_period_sales}, 0) ;;
+    value_format_name: percent_2
+    description: "Percentage variance in sales from previous period to current period."
+  }
 }
+

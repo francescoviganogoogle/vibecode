@@ -6,6 +6,14 @@ include: "/*.dashboard"
 explore: order_items {
   label: "Order Items (Ecommerce)"
   
+  sql_always_where:
+    {% if order_items.date_input._is_filtered %}
+      ${order_items.created_date} >= ${order_items.parallel_period_start}
+      AND ${order_items.created_date} < ${order_items.selected_period_end}
+    {% else %}
+      1=1
+    {% endif %} ;;
+
   join: users {
     type: left_outer
     sql_on: ${order_items.user_id} = ${users.id} ;;

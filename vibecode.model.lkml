@@ -1,11 +1,11 @@
-connection: "looker_demo_data_2"
+connection: "ecommerce"
 
 include: "/views/**/*.view.lkml"
 include: "/*.dashboard"
 
 explore: order_items {
   label: "Order Items (Ecommerce)"
-  
+
   sql_always_where:
     {% if order_items.date_input._is_filtered %}
       ${order_items.created_date} >= ${order_items.parallel_period_start}

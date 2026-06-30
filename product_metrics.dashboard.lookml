@@ -3,7 +3,6 @@
   description: "Executive summary and deep-dive product analysis of key metrics, margins, returns, and hierarchical product drilling."
   preferred_viewer: dashboards-next
   layout: newspaper
-  query_timezone: user_timezone
   crossfilter_enabled: true
 
   # Dashboard Tabs
@@ -81,7 +80,7 @@
       body_text: |
         <div style="background-color: #f8f9fa; padding: 15px; border-left: 5px solid #1A73E8; border-radius: 4px; margin-bottom: 10px;">
           <p style="margin: 0; font-size: 14px; color: #3c4043; line-height: 1.5;">
-            Welcome to the <strong>Product Metrics Dashboard</strong>. This dashboard highlights our executive metrics including total sales, order volume, return rates, and margins. 
+            Welcome to the <strong>Product Metrics Dashboard</strong>. This dashboard highlights our executive metrics including total sales, order volume, return rates, and margins.
             Use the <strong>Product Hierarchy Analysis</strong> tab to deep-dive into performance and drill down from <strong>Department → Category → Brand</strong>.
           </p>
         </div>
@@ -276,8 +275,8 @@
       body_text: |
         <div style="background-color: #f8f9fa; padding: 15px; border-left: 5px solid #1A73E8; border-radius: 4px; margin-bottom: 10px;">
           <p style="margin: 0; font-size: 14px; color: #3c4043; line-height: 1.5;">
-            <strong>Drillable Hierarchy:</strong> The grid below lists our performance metrics grouped by 
-            <strong>Department</strong>, <strong>Category</strong>, and <strong>Brand</strong>. 
+            <strong>Drillable Hierarchy:</strong> The grid below lists our performance metrics grouped by
+            <strong>Department</strong>, <strong>Category</strong>, and <strong>Brand</strong>.
             Clicking on any value in these columns allows you to drill down step-by-step or view specific products.
             Similarly, clicking on any measure value launches a detailed breakdown along the hierarchy.
           </p>

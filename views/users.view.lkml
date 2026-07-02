@@ -33,6 +33,14 @@ view: users {
     description: "This column contains the age of the user."
   }
 
+  dimension: age_tier {
+    type: tier
+    tiers: [0, 18, 30, 60]
+    style: integer
+    sql: ${age} ;;
+    description: "The age of the user, grouped into tiers: Under 0, 0-17, 18-29, 30-59, 60+."
+  }
+
   dimension: gender {
     type: string
     sql: ${TABLE}.gender ;;
